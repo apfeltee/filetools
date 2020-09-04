@@ -1,10 +1,7 @@
 
-`filetools` is a collection of programs that work with files, typically in some sort of  
-statistical manner.  
+countext is a program that reads directories recursively, counting file extensions, and
+printing statistics about them.
+if you need more finely-tuned path searching capabilities, you can also combine countext
+and `find`, since countext, using the option `--stdin`, will also read paths from stdin.
 
-What's included:
-
-  + `mksum` reads a file containing a list of filesizes (such as produced by `du -h`), and calculates and prints the sum total.
-
-
-
+needs optionparser from https://github.com/apfeltee/optionparser. 

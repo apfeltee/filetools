@@ -1,15 +1,21 @@
 rule cc
   deps = gcc
   depfile = $in.d
-  command = g++ -std=c++17 -O3 -Wall -Wextra -MMD -MF $in.d -g3 -ggdb3 -I src -c $in -o $out
+  command = g++ -std=c++17 -O3 -Wall -Wextra -MMD -MF $in.d -g3 -ggdb3 -I include -I src -c $in -o $out
   description = [CC] $in -> $out
 
 rule link
-  command = g++ -std=c++17 -O3 -g3 -ggdb3 -I src -o $out $in -lstdc++fs
+  command = g++ -std=c++17 -O3 -g3 -ggdb3 -I include -I src -o $out $in -lstdc++fs
   description = [LINK] $out
 
 build src/shared.o: cc src/shared.cpp
   depfile = src/shared.cpp.d
+build src/progs/countext.o: cc src/progs/countext.cpp
+  depfile = src/progs/countext.cpp.d
+build bin/countext: link src/progs/countext.o src/shared.o
 build src/progs/mksum.o: cc src/progs/mksum.cpp
   depfile = src/progs/mksum.cpp.d
 build bin/mksum: link src/progs/mksum.o src/shared.o
+build src/progs/sdu.o: cc src/progs/sdu.cpp
+  depfile = src/progs/sdu.cpp.d
+build bin/sdu: link src/progs/sdu.o src/shared.o

@@ -16,6 +16,7 @@ SOURCEDIRS = [
   "src",
 ]
 INCDIRS = [
+  "include",
   "src",
 ]
 

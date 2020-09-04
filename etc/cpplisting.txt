@@ -1,0 +1,49 @@
+-- skipping c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Commands
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Commands\C & C++ Library Completions.tmCommand
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Commands\C Library Completions.tmCommand
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Commands\Compile Active File to Command Line Tool.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Commands\Insert Missing Includes.tmCommand
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Commands\Quick Open.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Commands\Toggle System Local Include.tmCommand
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\info.plist
+-- skipping c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Preferences
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Preferences\Comments (C++).tmPreferences
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Preferences\Disable Spell Checking.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Preferences\Include Completion (System).tmPreferences
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Preferences\Include Completion.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Preferences\Include typing pairs.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Preferences\Indentation Rules.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Preferences\Template cast typing pairs.plist
+-- skipping c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\#endif.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\#ifndef ? #define ? #endif.tmSnippet
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\#include ' (inc).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\#include () (Inc).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\#pragma mark (mark).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\$1.begin(), $1.end() (beginend).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\010 main() (main).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\030 for int loop (fori).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\class .. (class).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\do...while loop (do).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\fprintf ?.tmSnippet
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\if .. (if).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\Include header once only guard.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\namespace .. (namespace).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\printf .. (printf).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\read file (readF).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\std  map (map).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\std  vector (v).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\struct.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\template (typename ..) (template).plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Snippets\Typedef.tmSnippet
+-- skipping c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Support
+-- skipping c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Support\bin
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Support\bin\insert_missing_includes.rb
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Support\bin\insert_missing_includes_cygwin.rb
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Support\C++Lib.txt.gz
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Support\CLib.txt.gz
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Support\SpotlightSearch.rb
+-- skipping c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Syntaxes
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Syntaxes\C++.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Syntaxes\C.plist
+c:\users\sebastian\Desktop\e\Bundles\C.tmbundle\Syntaxes\OpenGL.plist

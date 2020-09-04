@@ -16,10 +16,9 @@ namespace Shared
             order++;
             len = len / 1024;
         }
-
         if(precision > 0)
         {
-            rs << std::setprecision(precision);
+            rs << std::fixed << std::showpoint << std::setprecision(precision);
         }
         rs << len << sizes[order];
         return rs.str();
