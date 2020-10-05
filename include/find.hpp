@@ -170,7 +170,7 @@ namespace Find
             std::vector<IgnoreFileFunc> m_ignfilefuncs;
             ExceptionFunc m_exceptionfunc;
             Config m_opts;
-            size_t m_depthlevel = 1;
+            size_t m_depthlevel = 0;
 
 
         protected:
@@ -332,7 +332,6 @@ namespace Find
                             }
                             else
                             {
-                                //if((m_opts.max_depth == 0) && ((m_opts.max_depth != 0) && (m_depthlevel != m_opts.max_depth)))
                                 if((m_opts.max_depth == 0) || (m_depthlevel != m_opts.max_depth))
                                 {
                                     m_depthlevel++;

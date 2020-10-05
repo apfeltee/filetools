@@ -23,9 +23,10 @@
 
 struct Config
 {
-    bool sort = false;
+    bool sort = true;
     bool readstdin = false;
     bool recursive = false;
+    bool printbytes = false;
     size_t max_depth = 0;
     std::optional<std::string> filepath = {};
 };
@@ -34,23 +35,34 @@ struct Program
 {
     struct Item
     {
-        size_t sizebytes;
+        bool isdirectory = false;
+        size_t sizebytes = 0;
         std::filesystem::path path;
     };
 
     Config cfg;
-    std::vector<std::string> dirs;
     std::vector<Item> items;
 
-    Program(Config c, const std::vector<std::string>& d): cfg(c), dirs(d)
+    Program(Config c): cfg(c)
     {
     }
 
     void printItem(const Item& it)
     {
-        std::string sizestr = Shared::sizeToReadable(it.sizebytes, 2);
-        std::cout << sizestr << "\t" << it.path.string() << std::endl;
-        std::cout << std::flush;
+        if(cfg.printbytes)
+        {
+            std::cout << it.sizebytes;
+        }
+        else
+        {
+            std::cout << Shared::sizeToReadable(it.sizebytes, 2);
+        }
+        std::cout << "\t" << it.path.string();
+        if(it.isdirectory)
+        {
+            std::cout << "/";
+        }
+        std::cout << std::endl << std::flush;
     }
 
     void printSorted()
@@ -65,25 +77,82 @@ struct Program
         }
     }
 
-    void handleItem(const std::string& fs)
+    void finder(const std::filesystem::path& path, size_t maxdepth, bool onlyfiles, std::function<void(const std::filesystem::path&)> fn)
     {
+        Find::Finder fi(path);
+        if(maxdepth != 0)
+        {
+            fi.setMaxDepth(maxdepth);
+        }
+        fi.onException([&](const std::exception& ex, const std::string& orig, const std::filesystem::path& p)
+        {
+            std::string exmsg;
+            exmsg = ex.what();
+            exmsg.erase(std::remove(exmsg.begin(), exmsg.end(), '\r'), exmsg.end());
+            exmsg.erase(std::remove(exmsg.begin(), exmsg.end(), '\n'), exmsg.end());
+            std::cerr << "ERROR: in '" << orig << "': path \"" << p.string() << "\": " << exmsg << std::endl;
+        });
+        if(onlyfiles)
+        {
+            fi.skipItemIf([&](const std::filesystem::path& checkthis, bool isdir, bool isfile)
+            {
+                (void)checkthis;
+                (void)isfile;
+                return isdir;
+            });
+        }
+        fi.walk(fn);
+    }
+
+    size_t sizeOfFile(const std::filesystem::path& path)
+    {
+        //std::cerr << "sizeOfFile(" << path << ")" << std::endl;
+        if(std::filesystem::is_regular_file(path))
+        {
+            return std::filesystem::file_size(path);
+        }
+        return 0;
+    }
+
+    size_t sizeOfDirectory(const std::filesystem::path& dirn)
+    {
+        size_t sz;
+        sz = 0;
+        finder(dirn, 0, true, [&](const std::filesystem::path& path)
+        {
+            size_t r;
+            r = sizeOfFile(path);
+            //std::cerr << "sizeOfDirectory:path=" << path << ", size=" << r << std::endl;
+            sz += r;
+        });
+        return sz;
+    }
+
+    void handleItem(const std::filesystem::path& fs)
+    {
+        Item it;
+        it.path = fs;
         if(std::filesystem::is_regular_file(fs))
         {
-            Item it;
-            it.path = std::filesystem::path(fs);
-            it.sizebytes = std::filesystem::file_size(it.path);
-            if(cfg.sort)
-            {
-                items.push_back(it);
-            }
-            else
-            {
-                printItem(it);
-            }
+            it.sizebytes = sizeOfFile(it.path);
+        }
+        else if(std::filesystem::is_directory(fs))
+        {
+            it.isdirectory = true;
+            it.sizebytes = sizeOfDirectory(it.path);
         }
         else
         {
-            std::cerr << "not a file: " << fs << std::endl;
+            std::cerr << "not a file or directory: " << fs << std::endl;
+            return;
+        }
+        if(cfg.sort)
+        {
+            items.push_back(it);
+        }
+        else
+        {
+            printItem(it);
         }
     }
 
@@ -117,39 +186,14 @@ struct Program
 
     bool readDir(const std::string& dirn)
     {
-        size_t md;
-        Find::Finder fi(dirn);
-        md = 1;
-        if(cfg.max_depth > 0)
-        {
-            md = cfg.max_depth;
-        }
-        if(!cfg.recursive)
-        {
-            fi.setMaxDepth(md);
-        }
-        fi.onException([&](const std::exception& ex, const std::string& orig, const std::filesystem::path& p)
-        {
-            std::string exmsg;
-            exmsg = ex.what();
-            exmsg.erase(std::remove(exmsg.begin(), exmsg.end(), '\r'), exmsg.end());
-            exmsg.erase(std::remove(exmsg.begin(), exmsg.end(), '\n'), exmsg.end());
-            std::cerr << "ERROR: in '" << orig << "': path \"" << p.string() << "\": " << exmsg << std::endl;
-        });
-        fi.skipItemIf([&](const std::filesystem::path& checkthis, bool isdir, bool isfile)
-        {
-            (void)checkthis;
-            (void)isfile;
-            return isdir;
-        });
-        fi.walk([&](const std::filesystem::path& path)
+        for(auto& path: std::filesystem::directory_iterator(dirn))
         {
             handleItem(path);
-        });
+        }
         return true;
     }
 
-    bool main()
+    bool main(const std::vector<std::string>& args)
     {
         if(cfg.readstdin)
         {
@@ -164,11 +208,11 @@ struct Program
         }
         else
         {
-            if(dirs.size() > 0)
+            if(args.size() > 0)
             {
-                for(auto& dir: dirs)
+                for(auto& arg: args)
                 {
-                    readDir(dir);
+                    handleItem(arg);
                 }
             }
             else
@@ -184,9 +228,9 @@ int main(int argc, char* argv[])
 {
     Config cfg;
     OptionParser prs;
-    prs.on({"-s", "--sort"}, "sort sizes", [&]
+    prs.on({"-s", "--nosort"}, "do not sort sizes", [&]
     {
-        cfg.sort = true;
+        cfg.sort = false;
     });
     prs.on({"-i", "--stdin"}, "read filepaths from stdin", [&]
     {
@@ -204,11 +248,15 @@ int main(int argc, char* argv[])
     {
         cfg.recursive = true;
     });
+    prs.on({"-b", "--bytes"}, "print bytes, instead of units", [&]
+    {
+        cfg.printbytes = true;
+    });
     try
     {
         prs.parse(argc, argv);
-        Program pg(cfg, prs.positional());
-        if(pg.main())
+        Program pg(cfg);
+        if(pg.main(prs.positional()))
         {
             if(cfg.sort)
             {
